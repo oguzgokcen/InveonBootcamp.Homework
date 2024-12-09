@@ -5,6 +5,8 @@ VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InveonBootcamp.Homework", "InveonBootcamp.Homework1\InveonBootcamp.Homework.csproj", "{3D693948-6234-4A89-85C8-3E49DBDE5B2B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InveonBootcamp.Homework.LibraryApi", "InveonBootcamp.Homework.LibraryApi\InveonBootcamp.Homework.LibraryApi.csproj", "{2BC275FF-954F-45FC-8965-0A51DB3075FF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{3D693948-6234-4A89-85C8-3E49DBDE5B2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D693948-6234-4A89-85C8-3E49DBDE5B2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D693948-6234-4A89-85C8-3E49DBDE5B2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BC275FF-954F-45FC-8965-0A51DB3075FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BC275FF-954F-45FC-8965-0A51DB3075FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BC275FF-954F-45FC-8965-0A51DB3075FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BC275FF-954F-45FC-8965-0A51DB3075FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

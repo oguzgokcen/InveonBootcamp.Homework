@@ -1,0 +1,61 @@
+﻿@using LibraryApplication.Models.Identity
+@model List<AppUser>
+@{
+}
+
+@* <label>Users</label>
+
+<div class="row">
+	<div class="col">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Username</th>
+					<th>Email</th>
+					<th>Role</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var user in Model)
+				{
+					var roles = "";
+					<tr>
+						<td>@user.Id</td>
+						<td>
+							@if(user.UserDetails!=null){
+								@user.UserDetails.FullName
+							}else{
+								@user.UserName
+							}
+						</td>
+						<td>@user.Email</td>
+						<td>
+							<label>
+								@foreach (var userRole in user.UserRoles)
+								{
+									roles = roles + ", " + userRole.Role.Name;
+								}
+								@roles
+							</label>
+						</td>
+						<td>
+							<a href="@Url.Action("Edit", "User", new { id = user.Id })">Edit</a>
+							<a href="@Url.Action("Delete", "User", new { id = user.Id })">Delete</a>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+    </div>
+</div> *@
+
+<div id="data-container"></div>
+
+<div id="data-child-container"></div>
+
+<br />
+@section Scripts{
+	<script type="text/javascript" src="@Url.Content("~/js/Scripts/user-index.js")?v=1.0"></script>
+}

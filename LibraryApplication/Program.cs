@@ -1,15 +1,42 @@
+using LibraryApplication.Models.Identity;
+using LibraryApplication.Repository;
+using LibraryApplication.Repository.Extensions;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddJsonOptions(options =>
+{
+	options.JsonSerializerOptions.PropertyNamingPolicy = null; // Use Pascal case
+}).AddRazorRuntimeCompilation();
+
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+	options.UseSqlServer(builder.Configuration.GetConnectionString("MsSql"));
+});
+
+builder.Services.AddIdentity<AppUser, AppRole>(options =>
+{
+	options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+/ ";
+}).AddEntityFrameworkStores<AppDbContext>();
+
+builder.Services.AddRepositories();
+
+builder.Services.ConfigureApplicationCookie(opt =>
+{
+	opt.LoginPath = new PathString("/login");
+	opt.AccessDeniedPath = new PathString("/Home/AccessDenied");
+	opt.Cookie.Name = "LibraryCookie";
+	opt.ExpireTimeSpan = TimeSpan.FromDays(60);
+	opt.SlidingExpiration = true; 
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
 	app.UseExceptionHandler("/Home/Error");
-	// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 	app.UseHsts();
 }
 

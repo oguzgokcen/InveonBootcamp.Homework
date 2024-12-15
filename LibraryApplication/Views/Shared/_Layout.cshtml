@@ -7,6 +7,9 @@
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/js/jtable/themes/metro/blue/jtable-fonts.css" />
+    <link rel="stylesheet" href="~/js/jtable/themes/metro/blue/jtable.css" />
+    <link rel="stylesheet" href="~/css/jtable.min.css" />
     <link rel="stylesheet" href="~/LibraryApplication.styles.css" asp-append-version="true" />
 </head>
 <body>
@@ -42,7 +45,10 @@
             &copy; 2024 - LibraryApplication - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/jquery-2.1.4.min.js"></script>
+    <script src="~/js/jquery-ui-1.10.0.min.js"></script>
+
+    <script src="~/js/jtable/jquery.jtable.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)

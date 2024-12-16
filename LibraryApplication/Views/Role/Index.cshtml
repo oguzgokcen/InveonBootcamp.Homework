@@ -2,8 +2,13 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+	Layout = "_AdminLayout";
 }
 
 <div>
-	<label>Roles</label>
+	<div id="data-container"></div>
 </div>
+
+@section Scripts {
+	<script type="text/javascript" src="@Url.Content("~/js/Scripts/role-index.js")?v=1.0"></script>
+}

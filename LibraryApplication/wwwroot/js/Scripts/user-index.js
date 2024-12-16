@@ -11,12 +11,12 @@
             deleteAction: '/Role/DeleteUser'
         },
         fields: {
-            Id: { // Match the JSON property name
+            UserId: {
                 key: true,
                 title: 'Id',
                 width: '10%'
             },
-            Email: { // Match the JSON property name
+            Email: {
                 title: 'Email',
                 width: '15%'
             },
@@ -60,7 +60,7 @@
 
                     var record = $(this).data('record');
 
-                    loadChildRecords(record.Id, record.FullName);
+                    loadChildRecords(record.UserId, record.FullName);
                 });
             }
         },
@@ -73,33 +73,41 @@
     }
     function loadChildRecords(entityId, entityName) {
 
-        parentEntityId = entityId;
-
         $('#data-child-container').jtable({
             title: 'Roles of ' + entityName,
             jqueryuiTheme: true,
             sorting: false,
             actions: {
-                listAction: '/Role/ListUserRoles/' + entityId,
-                createAction: '/Role/AddRole/' + entityId,
-                updateAction: '/Role/UpdateRole/' + entityId,
-                deleteAction: '/Role/DeleteRole/' + entityId,
+                listAction: '/Role/ListUserRoles?UserId=' + entityId,
+                createAction: '/Role/AddRoleToUser',
+                deleteAction: function (postData) {
+                    return $.Deferred(function ($dfd) {
+                        $.ajax({
+                            url: '/Role/DeleteRoleFromUser',
+                            type: 'POST',
+                            dataType: 'json',
+                            data: { UserId: entityId, RoleName: postData.RoleName },
+                            success: function (data) {
+                                $dfd.resolve(data);
+                            },
+                            error: function () {
+                                $dfd.reject();
+                            }
+                        });
+                    });
+                }
             },
             fields: {
                 UserId: {
                     type: 'hidden',
                     defaultValue: entityId
                 },
-                Id: {
+                RoleName: {
                     key: true,
-                    create: false,
-                    edit: false,
-                    list: false
-                },
-                Name: {
-                    create: false,
+                    create:true,
                     title: 'Name',
                     width: '30%',
+                    edit: true
                 }
             }
         });
@@ -107,8 +115,6 @@
         $('#data-child-container').jtable('load');
     }
 
-    // Load data into the table
     $('#data-container').jtable('load', {
-        isActive: true
     });
 });

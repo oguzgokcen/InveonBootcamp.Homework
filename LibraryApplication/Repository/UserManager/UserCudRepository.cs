@@ -3,6 +3,7 @@ using LibraryApplication.Models.Exceptions;
 using LibraryApplication.Models.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace LibraryApplication.Repository.UserManager
 {
@@ -20,14 +21,13 @@ namespace LibraryApplication.Repository.UserManager
 					CreatedOnUtc = DateTime.UtcNow
 				}
 			};
-			 
 			var createUserResult =  await userManager.CreateAsync(user, addUserDto.Password);
 			return createUserResult;
 		}
 
 		public async Task UpdateUser(UpdateUserDto updateUserDto)
 		{
-			var existingUser = await userManager.Users.Include(x=> x.UserDetails).FirstOrDefaultAsync(x => x.Id == updateUserDto.Id);
+			var existingUser = await userManager.Users.Include(x=> x.UserDetails).FirstOrDefaultAsync(x => x.Id == updateUserDto.UserId);
 			if (existingUser == null)
 			{
 				throw new ServiceException("User not found");

@@ -19,7 +19,13 @@
 
 		public static object ToJsonError(string message)
 		{
-			return new { Result = "ERROR", Message = "'" + message + "'" };
+			return new { Result = "ERROR", Message = message };
 		}
+
+		public static object ToJson<T>(this T data)
+		{
+			return new { Result = "OK", Record = data };
+		}
+
 	}
 }

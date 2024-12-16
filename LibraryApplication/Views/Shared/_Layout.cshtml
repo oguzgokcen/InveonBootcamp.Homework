@@ -1,56 +1,66 @@
 ﻿<!DOCTYPE html>
+@{
+	var isAuthanticated = Context.User != null ? Context.User.Identity.IsAuthenticated : false;
+	var user = Context.User;
+	var claims = User.Claims;
+	var isAdmin = Context.User.IsInRole("Admin");
+}
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - LibraryApplication</title>
-    <script type="importmap"></script>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/js/jtable/themes/metro/blue/jtable-fonts.css" />
-    <link rel="stylesheet" href="~/js/jtable/themes/metro/blue/jtable.css" />
-    <link rel="stylesheet" href="~/css/jtable.min.css" />
-    <link rel="stylesheet" href="~/LibraryApplication.styles.css" asp-append-version="true" />
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - LibraryApplication</title>
+	<script type="importmap"></script>
+
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" />
+	<link rel="stylesheet" href="~/js/jtable/themes/metro/blue/jtable-fonts.css" />
+	<link rel="stylesheet" href="~/js/jtable/themes/metro/blue/jtable.css" />
+	<link rel="stylesheet" href="~/css/jtable.min.css" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">LibraryApplication</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
+    <header class="p-1 text-bg-dark">
+        <div class="d-flex flex-nowrap align-items-center justify-content-center justify-content-lg-start px-5">
+            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
+                <img src="~/Books.svg" class="flex-shrink-0" style="width: 60px; height: auto; max-height: 100%;" />
+            </a>
+            <ul class="nav col-auto me-lg-auto justify-content-center mb-md-0">
+                <li><a href="/" class="nav-link px-3 text-primary">Home</a></li>
+            </ul>
+            <div class="text-end flex-shrink-0">
+                @if (!isAuthanticated)
+                {
+                    <a href="@Url.Action("Index", "Login")" class="btn btn-outline-primary me-2">Login</a>
+                    <a href="#" class="btn btn-primary me-2">Sign-up</a>
+                }
+                else
+                {
+                    <div class="dropdown me-2">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span>@user.Identity.Name</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="@Url.Action("Logout", "Login")" class="dropdown-item">Logout</a></li>
+                        </ul>
+                    </div>
+                }
+                @if (isAuthanticated && isAdmin)
+                {
+                    <a href="@Url.Action("Users", "Role")" class="btn btn-warning">Admin</a>
+                }
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - LibraryApplication - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-    </footer>
-    <script src="~/js/jquery-2.1.4.min.js"></script>
-    <script src="~/js/jquery-ui-1.10.0.min.js"></script>
+    </header>
 
-    <script src="~/js/jtable/jquery.jtable.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+	<main role="main" class="pb-3">
+		@RenderBody()
+	</main>
+	<script src="~/js/jquery-2.1.4.min.js"></script>
+	<script src="~/js/jquery-ui-1.10.0.min.js"></script>
+
+	<script src="~/js/jtable/jquery.jtable.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

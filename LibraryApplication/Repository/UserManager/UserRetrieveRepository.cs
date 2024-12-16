@@ -1,6 +1,10 @@
-﻿using LibraryApplication.Models.Identity;
+﻿using LibraryApplication.Models.DTO.Identity;
+using LibraryApplication.Models.Identity;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace LibraryApplication.Repository.UserManager
 {
@@ -11,14 +15,22 @@ namespace LibraryApplication.Repository.UserManager
 			return await userManager.Users.Include(x => x.UserRoles).Include(x=>x.UserDetails).ToListAsync();
 		}
 
-		public async Task<AppUser?> GetUserById(Guid id)
+		public async Task<AppUser?> Login(LoginDto loginDto)
 		{
-			return await userManager.FindByIdAsync(id.ToString());
-		}
+			var user = await userManager.FindByEmailAsync(loginDto.Email);
+			if(user == null)
+			{
+				return null;
+			}
 
-		public async Task<List<AppRole>> GetUserRoles(Guid id)
-		{
-			return await roleManager.Roles.Include(x => x.UserRoles).Where(x => x.UserRoles.Any(y => y.UserId == id)).ToListAsync();
+			var passwordCheck = await userManager.CheckPasswordAsync(user, loginDto.Password);
+
+			if (!passwordCheck)
+			{
+				throw new SystemException("Password is not match.");
+			}
+
+			return user;
 		}
-	}
+ 	}
 }

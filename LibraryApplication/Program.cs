@@ -19,18 +19,19 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddIdentity<AppUser, AppRole>(options =>
 {
 	options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+/ ";
+	options.User.RequireUniqueEmail = true;
 }).AddEntityFrameworkStores<AppDbContext>();
-
-builder.Services.AddRepositories();
 
 builder.Services.ConfigureApplicationCookie(opt =>
 {
 	opt.LoginPath = new PathString("/login");
-	opt.AccessDeniedPath = new PathString("/Home/AccessDenied");
+	opt.AccessDeniedPath = new PathString("/home/denied");
 	opt.Cookie.Name = "LibraryCookie";
 	opt.ExpireTimeSpan = TimeSpan.FromDays(60);
-	opt.SlidingExpiration = true; 
+	opt.SlidingExpiration = true;
 });
+
+builder.Services.AddRepositories();
 
 var app = builder.Build();
 

@@ -4,10 +4,8 @@ using LibraryApplication.Models.Identity;
 using LibraryApplication.Repository;
 using LibraryApplication.Repository.UserManager;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 
-
-namespace LibraryApplication.Service.UserService
+namespace LibraryApplication.Service.UserServices
 {
 	public class UserService(IUserRetrieveRepository userRepository, IUserCudRepository userCudRepository, IUnitOfWork unitOfWork) : IUserService
 	{
@@ -28,16 +26,6 @@ namespace LibraryApplication.Service.UserService
 			return await userCudRepository.AddUser(user);
 		}
 
-		public async Task<List<AppRole>> GetUserRoles(Guid id)
-		{
-			var roles = await userRepository.GetUserRoles(id);
-			if (roles == null)
-			{
-				throw new ServiceException("No roles found");
-			}
-			return roles;
-		}
-
 		public async Task<bool> UpdateUser(UpdateUserDto updateUserDto)
 		{
 			await userCudRepository.UpdateUser(updateUserDto);
@@ -51,5 +39,12 @@ namespace LibraryApplication.Service.UserService
 			await unitOfWork.SaveChangesAsync();
 			return true;
 		}
+
+		public async Task<AppUser?> Login(LoginDto loginDto)
+		{
+			var user = await userRepository.Login(loginDto);
+			return user;
+		}
+
 	}
 }

@@ -1,13 +1,12 @@
 ﻿using LibraryApplication.Helpers;
 using LibraryApplication.Models.DTO.Identity;
 using LibraryApplication.Service.UserServices;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
 
 namespace LibraryApplication.Controllers
 {
-	//[Authorize(Roles = "Admin")]
+	[Authorize(Roles = "Admin")]
 	public class RoleController(IUserService userService,IRoleService roleService) : Controller
 	{
 		public IActionResult Index()
@@ -57,7 +56,6 @@ namespace LibraryApplication.Controllers
 			return Json(JsonExtensions.ToJsonOk());
 		}
 
-		//list of crud operations for roles for the spesific user
 		public async Task<JsonResult> ListUserRoles(Guid UserId)
 		{
 			var roles = await roleService.GetUserRoles(UserId);

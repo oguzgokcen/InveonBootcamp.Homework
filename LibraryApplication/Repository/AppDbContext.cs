@@ -1,4 +1,5 @@
-﻿using LibraryApplication.Models.Identity;
+﻿using LibraryApplication.Models.BookModel;
+using LibraryApplication.Models.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Emit;
@@ -7,7 +8,7 @@ namespace LibraryApplication.Repository
 {
 	public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbContext<AppUser, AppRole, Guid>(options)
 	{
-
+		public DbSet<Book> Books { get; set; }
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
 			optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
@@ -27,7 +28,6 @@ namespace LibraryApplication.Repository
 
 			builder.Entity<AppRole>(b =>
 			{
-				// Each Role can have many entries in the UserRole join table
 				b.HasMany(e => e.UserRoles)
 					.WithOne(e => e.Role)
 					.HasForeignKey(ur => ur.RoleId)

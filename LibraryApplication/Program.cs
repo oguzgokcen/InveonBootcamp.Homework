@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews().AddJsonOptions(options =>
 {
-	options.JsonSerializerOptions.PropertyNamingPolicy = null; // Use Pascal case
+	options.JsonSerializerOptions.PropertyNamingPolicy = null;
 }).AddRazorRuntimeCompilation();
 
 
@@ -50,7 +50,7 @@ app.MapStaticAssets();
 
 app.MapControllerRoute(
 	name: "default",
-	pattern: "{controller=Home}/{action=Index}/{id?}")
+	pattern: "{controller=Book}/{action=Index}/{id?}")
 	.WithStaticAssets();
 
 

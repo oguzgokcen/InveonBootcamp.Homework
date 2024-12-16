@@ -1,0 +1,48 @@
+﻿@using LibraryApplication.Models.BookModel
+@model Book
+<div class="container mt-4">
+	<h2>Book Details</h2>
+	<table class="table table-bordered">
+		<tr>
+			<th>Title</th>
+			<td>@Model.Title</td>
+		</tr>
+		<tr>
+			<th>Author</th>
+			<td>@Model.Author</td>
+		</tr>
+		<tr>
+			<th>Publication Year</th>
+			<td>@Model.PublicationYear</td>
+		</tr>
+		<tr>
+			<th>ISBN</th>
+			<td>@Model.ISBN</td>
+		</tr>
+		<tr>
+			<th>Genre</th>
+			<td>@Model.Genre</td>
+		</tr>
+		<tr>
+			<th>Publisher</th>
+			<td>@Model.Publisher</td>
+		</tr>
+		<tr>
+			<th>Page Count</th>
+			<td>@Model.PageCount</td>
+		</tr>
+		<tr>
+			<th>Language</th>
+			<td>@Model.Language</td>
+		</tr>
+		<tr>
+			<th>Summary</th>
+			<td>@Model.Summary</td>
+		</tr>
+		<tr>
+			<th>Available Copies</th>
+			<td>@Model.AvailableCopies</td>
+		</tr>
+	</table>
+	<a href="/Book/Index" class="btn btn-primary">Back to List</a>
+</div>
